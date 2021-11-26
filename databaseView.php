@@ -51,3 +51,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
+
+<?php
+    require_once('./library.php');
+    $con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+    // Check connection
+    if (mysqli_connect_errno()) {
+        echo("Can't connect to MySQL Server. Error code: " . mysqli_connect_error());
+        return null;
+        }
+?>
