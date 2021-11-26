@@ -65,3 +65,25 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
+
+//<?php
+    
+    // Form the SQL query (an insert query)
+    $sql="INSERT INTO TV_Movies (ID, Name, Year_Released, Location, Length, Rating)
+    VALUES('$_POST[ID]','$_POST[Name]','$_POST[Year_Released]', '$_POST[Location]', '$_POST[Length]', '$_POST[Rating]')";
+    if (!mysqli_query($con,$sql))
+        {
+        die('Error: ' . mysqli_error($con));
+        }
+    echo "1 record added"; // Output to user
+
+    // Print the data from the table row by row
+    while($row = mysqli_fetch_array($result)) {
+        echo $row['FirstN'];
+        echo " " . $row['LastN'];
+        echo " " . $row['Age'];
+        echo "<br>";
+        }
+
+    mysqli_close($con);
+//?>
