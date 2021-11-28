@@ -16,47 +16,47 @@
                 </div>
             </nav>
         </header>
-        <form class="row g-3" style="margin:0% 15% 0% 15%">
+        <form action = "add.php" method = "POST" class="row g-3" style="margin:0% 15% 0% 15%">
             <h1 style="text-align:center; margin:3% 0% 1% 0%"><strong>ADD</strong></h1>
             <div class="col-md-6">
                 <label for="showID" class="form-label">Show ID</label>
-                <input type="text" class="form-control" id="showID">
+                <input type="text" class="form-control" name="showID">
             </div>
             <div class="col-md-6">
                 <label for="cast" class="form-label">Cast</label>
-                <input type="text" class="form-control" id="cast">
+                <input type="text" class="form-control" name="cast">
             </div>
             <div class="col-md-6">
                 <label for="type" class="form-label">Type</label>
-                <input type="text" class="form-control" id="type">
+                <input type="text" class="form-control" name="type">
             </div>
             <div class="col-md-6">
                 <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="country">
+                <input type="text" class="form-control" name="country">
             </div>
             <div class="col-md-6">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title">
+                <input type="text" class="form-control" name="title">
             </div>
             <div class="col-md-6">
                 <label for="dateAdded" class="form-label">Date Added</label>
-                <input type="text" class="form-control" id="dateAdded">
+                <input type="text" class="form-control" name="dateAdded">
             </div>
             <div class="col-md-6">
                 <label for="director" class="form-label">Director</label>
-                <input type="text" class="form-control" id="director">
+                <input type="text" class="form-control" name="director">
             </div>
             <div class="col-md-6">
                 <label for="releaseYear" class="form-label">Release Year</label>
-                <input type="text" class="form-control" id="releaseYear">
+                <input type="text" class="form-control" name="releaseYear">
             </div>
             <div class="col-md-6">
                 <label for="rating" class="form-label">Rating</label>
-                <input type="text" class="form-control" id="rating">
+                <input type="text" class="form-control" name="rating">
             </div>
             <div class="col-md-6">
                 <label for="duration" class="form-label">Duration</label>
-                <input type="text" class="form-control" id="duration">
+                <input type="text" class="form-control" name="duration">
             </div>
             <div class="col text-center">
                 <button class="btn btn-danger align-center px-5 mt-3" type="submit" >Submit</button>
@@ -65,13 +65,3 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
-
-<?php
-    require_once('./library.php');
-    $con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
-    // Check connection
-    if (mysqli_connect_errno()) {
-        echo("Can't connect to MySQL Server. Error code: " . mysqli_connect_error());
-        return null;
-        }
-?>
