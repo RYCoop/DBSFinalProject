@@ -30,10 +30,12 @@
             <nav class="navbar navbar-dark bg-dark">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.php" style="color:red"><strong>Netflix Nowledge</strong></a>
+                    <!--
                     <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-danger" type="sort.filter">Search</button>
                     </form>
+                    -->
                 </div>
             </nav>
         </header>
@@ -61,3 +63,4 @@
         return null;
         }
 ?>
+
