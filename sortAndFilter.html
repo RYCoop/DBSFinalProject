@@ -16,48 +16,59 @@
                 </div>
             </nav>
         </header>
-        <form action = "sortAndFilter.php" method = "POST" class="row g-3" style="margin:0% 15% 0% 15%">
-            <h1 style="text-align:center; margin:3% 0% 1% 0%"><strong>SORT. FILTER</strong></h1>
-            <div class="col-md-6">
-                <label for="showID" class="form-label">Show ID</label>
-                <input type="text" class="form-control" name="showID">
+        <h1 style="text-align:center; margin:3% 0% 1% 0%"><strong>SORT. FILTER</strong></h1>
+        <div style="margin:0% 25% 5% 25%">
+            <h2><strong>Sort</strong></h2>
+
+            <div>
+                <p>Please select one option below:</p>
+                <input type="radio" id="ID" name="sort-group" value="ID">
+                <label for="ID">ID</label><br>
+                <input type="radio" id="Title" name="sort-group" value="Title">
+                <label for="Title">Title</label><br>
+                <input type="radio" id="Release_Year" name="sort-group" value="Release_Year">
+                <label for="Release_Year">Release Year</label>
             </div>
-            <div class="col-md-6">
-                <label for="cast" class="form-label">Cast</label>
-                <input type="text" class="form-control" name="cast">
+
+            <br> 
+
+            <div>
+                <p>Please select one option below:</p>
+                <input type="radio" id="increasing" name="sort-group-two" value="increasing">
+                <label for="increasing">Increasing</label><br>
+                <input type="radio" id="decreasing" name="sort-group-two" value="decreasing">
+                <label for="decreasing">Decreasing</label><br>
             </div>
-            <div class="col-md-6">
-                <label for="type" class="form-label">Genre</label>
-                <input type="text" class="form-control" name="genre">
+
+            <br>
+
+            <h2><strong>Filter</strong></h2>
+
+            <div>
+                <p>Please select one option below:</p>
+                <input type="radio" id="ID" name="filter-group" value="ID">
+                <label for="ID">ID</label><br>
+                <input type="radio" id="Title" name="filter-group" value="Title">
+                <label for="Title">Title</label><br>
+                <input type="radio" id="Director" name="filter-group" value="Director">
+                <label for="Director">Director</label><br>
+                <input type="radio" id="Rating" name="filter-group" value="Rating">
+                <label for="Rating">Rating</label><br>
+                <input type="radio" id="Cast" name="filter-group" value="Cast">
+                <label for="Cast">Cast</label><br>
+                <input type="radio" id="Country" name="filter-group" value="Country">
+                <label for="Country">Country</label><br>
+                <input type="radio" id="Release_Year" name="filter-group" value="Release_Year">
+                <label for="Release_Year">Release Year</label><br>
+                <input type="radio" id="Genre" name="filter-group" value="Genre">
+                <label for="Genre">Genre</label><br>
             </div>
-            <div class="col-md-6">
-                <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control" name="country">
-            </div>
-            <div class="col-md-6">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" name="title">
-            </div>
-            <div class="col-md-6">
-                <label for="director" class="form-label">Director</label>
-                <input type="text" class="form-control" name="director">
-            </div>
-            <div class="col-md-6">
-                <label for="releaseYear" class="form-label">Release Year</label>
-                <input type="text" class="form-control" name="releaseYear">
-            </div>
-            <div class="col-md-6">
-                <label for="rating" class="form-label">Rating</label>
-                <input type="text" class="form-control" name="rating">
-            </div>
-            <div class="col-md-6">
-                <label for="duration" class="form-label">Duration</label>
-                <input type="text" class="form-control" name="duration">
-            </div>
-            <div class="col text-center">
-                <button class="btn btn-danger align-center px-5 mt-3" type="submit" >Sort & Filter</button>
-            </div>
-        </form>
+
+            <br>
+
+            <label for="specific">Filter Syntax Requirement:</label><br>
+            <input type="text" id="specific" name="specific"><br><br>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
