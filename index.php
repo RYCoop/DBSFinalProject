@@ -18,9 +18,9 @@
         </header>
         <div class="container">
             <div class="row justify-content-center" style="margin-top:18%;">
-                <a href="add.php" class="btn btn-danger" style="width:20%; padding:5% 0% 5% 0%; margin: 0% 3% 0% 3%"><strong>Add</strong></a>
+                <a href="add.html" class="btn btn-danger" style="width:20%; padding:5% 0% 5% 0%; margin: 0% 3% 0% 3%"><strong>Add</strong></a>
                 <a href="databaseView.php" class="btn btn-danger" style="width:20%; padding:5% 0% 5% 0%; margin: 0% 3% 0% 3%"><strong>Search, Delete, & Update</strong></a>
-                <a href="sortAndFilter.php" class="btn btn-danger" style="width:20%; padding:5% 0% 5% 0%; margin: 0% 3% 0% 3%"><strong>Sort & Filter</strong></a>
+                <a href="sortAndFilter.html" class="btn btn-danger" style="width:20%; padding:5% 0% 5% 0%; margin: 0% 3% 0% 3%"><strong>Sort & Filter</strong></a>
                 </div>
             </div>
         </div>
