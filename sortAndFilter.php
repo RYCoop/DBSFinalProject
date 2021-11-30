@@ -189,7 +189,7 @@ elseif (isset($sort_group3) && $sort_group3 == 'Cast') {
     echo "</table>";
 	mysqli_free_result($result);
 }
-elseif (isset($sort_group3) && $sort_group3 == 'Location') {
+elseif (isset($sort_group3) && $sort_group3 == 'Country') {
 	$where = "Location";
 	$sql_with_Location = "SELECT * FROM netflix_nowledge WHERE {$where} LIKE '%{$text}%' ORDER BY {$column} {$order}";
 	if (!mysqli_query($con,$sql_with_Location)){
