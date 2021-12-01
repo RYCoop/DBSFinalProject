@@ -80,7 +80,7 @@ $result = mysqli_query($con, $sql);
 			else {
 				echo '<td>' . $cell . '</td>';
 			}
-			//echo '<td><a href="update.html"><input type="button" name="update_button" value="' . $cell . '"></a></td>';
+			//echo '<td><a href="updateAndDelete.php"><input type="button" name="update_button" value="' . $cell . '"></a></td>';
 		}
 		echo "</tr>\n";		
 	}
