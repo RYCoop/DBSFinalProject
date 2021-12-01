@@ -1,4 +1,7 @@
 <?php
+
+// CITATION: https://phppot.com/php/secure-remember-me-for-login-using-php-session-and-cookies/
+
 require "DBController.php";
 class Auth {
     function getMemberByUsername($username) {
