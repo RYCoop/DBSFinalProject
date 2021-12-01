@@ -39,7 +39,7 @@ if (!mysqli_query($con,$sql)){
 $result = mysqli_query($con, $sql);
     $fields_num = mysqli_fetch_array($result);
     
-    echo "<h1 style='text-align:center; color:white; margin:-18% 10% 1% 10%'><strong>Total TV/Movies on record: {$fields_num{0}}</strong></h1>";
+    echo "<h1 style='text-align:center; color:white; margin:-18% 10% 1% 10%'><strong>Total TV/Movies on record: {$fields_num[0]}</strong></h1>";
     
 ?>
     </body>
