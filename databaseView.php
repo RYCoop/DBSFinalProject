@@ -61,6 +61,7 @@ $result = mysqli_query($con, $sql);
 	$fields_num = mysqli_num_fields($result);
 	
 	echo "<h1 style='text-align:center; margin:3% 10% 1% 10%'><strong>Results: Searched for '{$Name}'</strong></h1>";
+    echo "<p style='margin-right:10%; margin-left:10%'>To delete or update an item, click on the associated ID to be redirected to the delete and update page.</p>";
 	echo "<table border'1' class='table' style='background-color: white; width:90%; margin-right: auto; margin-left: auto; margin-top: 2%;'><tr style='background-color: #E50914; color:white'>";
 	for($i=0; $i<$fields_num; $i++) {
 		$field = mysqli_fetch_field($result);
