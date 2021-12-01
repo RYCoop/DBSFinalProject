@@ -8,21 +8,29 @@
 -- Table structure for table `members`
 --
 
-CREATE TABLE `members` (
-  `member_id` int(8) NOT NULL,
-  `member_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `member_password` varchar(64) NOT NULL,
-  `member_email` varchar(255) CHARACTER SET utf8 NOT NULL
+CREATE TABLE members (
+  member_id int(8) NOT NULL,
+  member_name varchar(255) CHARACTER SET utf8 NOT NULL,
+  member_password varchar(64) NOT NULL,
+  member_email varchar(255) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DELIMITER //
+CREATE TRIGGER `check_email` BEFORE INSERT ON `members`
+FOR EACH ROW BEGIN
+SET NEW.member_email = CONCAT(NEW.member_name, "@netflix.com");
+END
+//
+DELIMITER;  
 
 --
 -- Dumping data for table `members`
 --
 
-INSERT INTO `members` (`member_id`, `member_name`, `member_password`, `member_email`) VALUES
+INSERT INTO members (member_id, member_name, member_password, member_email) VALUES
 (1, 'admin', '$2a$10$0FHEQ5/cplO3eEKillHvh.y009Wsf4WCKvQHsZntLamTUToIBe.fG', 'admin@netflix.com');
 
-INSERT INTO `members` (`member_id`, `member_name`, `member_password`, `member_email`) VALUES
+INSERT INTO members (member_id, member_name, member_password, member_email) VALUES
 (2, 'test', '$2y$10$WvvuTaLsIAa6aqytPXgny.VS7xZA6jc4qoYh9ZCl5LI8RdoraPn1e', 'test@netflix.com');
 
 -- --------------------------------------------------------
@@ -31,13 +39,13 @@ INSERT INTO `members` (`member_id`, `member_name`, `member_password`, `member_em
 -- Table structure for table `tbl_token_auth`
 --
 
-CREATE TABLE `tbl_token_auth` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password_hash` varchar(255) NOT NULL,
-  `selector_hash` varchar(255) NOT NULL,
-  `is_expired` int(11) NOT NULL DEFAULT '0',
-  `expiry_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE tbl_token_auth (
+  id int(11) NOT NULL,
+  username varchar(255) NOT NULL,
+  password_hash varchar(255) NOT NULL,
+  selector_hash varchar(255) NOT NULL,
+  is_expired int(11) NOT NULL DEFAULT '0',
+  expiry_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -47,14 +55,14 @@ CREATE TABLE `tbl_token_auth` (
 --
 -- Indexes for table `members`
 --
-ALTER TABLE `members`
-  ADD PRIMARY KEY (`member_id`);
+ALTER TABLE members
+  ADD PRIMARY KEY (member_id);
 
 --
 -- Indexes for table `tbl_token_auth`
 --
-ALTER TABLE `tbl_token_auth`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE tbl_token_auth
+  ADD PRIMARY KEY (id);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -63,12 +71,12 @@ ALTER TABLE `tbl_token_auth`
 --
 -- AUTO_INCREMENT for table `members`
 --
-ALTER TABLE `members`
-  MODIFY `member_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE members
+  MODIFY member_id int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_token_auth`
 --
-ALTER TABLE `tbl_token_auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+ALTER TABLE tbl_token_auth
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
