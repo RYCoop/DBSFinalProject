@@ -23,7 +23,7 @@ FOR EACH ROW BEGIN
 SET NEW.member_email = CONCAT(NEW.member_name, "@netflix.com");
 END
 //
-DELIMITER;  
+DELIMITER ;  
 
 --
 -- Dumping data for table `members`
