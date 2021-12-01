@@ -20,10 +20,10 @@ CREATE TABLE `members` (
 --
 
 INSERT INTO `members` (`member_id`, `member_name`, `member_password`, `member_email`) VALUES
-(1, 'admin', '$2a$10$0FHEQ5/cplO3eEKillHvh.y009Wsf4WCKvQHsZntLamTUToIBe.fG', 'user@gmail.com');
+(1, 'admin', '$2a$10$0FHEQ5/cplO3eEKillHvh.y009Wsf4WCKvQHsZntLamTUToIBe.fG', 'admin@netflix.com');
 
 INSERT INTO `members` (`member_id`, `member_name`, `member_password`, `member_email`) VALUES
-(2, 'test', '$2y$10$WvvuTaLsIAa6aqytPXgny.VS7xZA6jc4qoYh9ZCl5LI8RdoraPn1e', 'test@gmail.com');
+(2, 'test', '$2y$10$WvvuTaLsIAa6aqytPXgny.VS7xZA6jc4qoYh9ZCl5LI8RdoraPn1e', 'test@netflix.com');
 
 -- --------------------------------------------------------
 
