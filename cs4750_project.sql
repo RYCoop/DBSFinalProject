@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2021 at 10:47 PM
+-- Generation Time: Dec 01, 2021 at 05:30 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -20,35 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cs4750_project`
 --
-
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `printTable` (IN `getid` INT)  SELECT *
-FROM tv_movies$$
-
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `accounts`
---
-
-CREATE TABLE `accounts` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `accounts`
---
-
-INSERT INTO `accounts` (`id`, `username`, `password`, `email`) VALUES
-(1, 'test', '$2y$10$SfhYIDtn.iOuCW7zfoFLuuZHX6lja4lF4XA4JqNmpiH/.P3zB8JCa', 'test@test.com');
 
 -- --------------------------------------------------------
 
@@ -165,8 +136,7 @@ INSERT INTO `actors` (`ACTOR_ID`, `Name`) VALUES
 (597, 'Salma Hayek'),
 (598, 'Maria Bello'),
 (599, 'Joyce Van Patten'),
-(600, NULL),
-(601, 'person a');
+(600, NULL);
 
 -- --------------------------------------------------------
 
@@ -473,8 +443,7 @@ INSERT INTO `countries` (`Country_ID`, `Name`) VALUES
 (208, NULL),
 (209, 'India'),
 (210, 'Bolivia'),
-(211, 'Uraguay'),
-(212, 'USA');
+(211, 'Uraguay');
 
 -- --------------------------------------------------------
 
@@ -536,15 +505,6 @@ INSERT INTO `directs` (`ID`, `DIRECTOR_ID`) VALUES
 (9, 310),
 (25, 311),
 (28, 312),
-(31, 301),
-(46, 303),
-(47, 303),
-(48, 303),
-(49, 303),
-(50, 303),
-(51, 303),
-(52, 303),
-(53, 303),
 (68, 301),
 (154, 301),
 (185, 301),
@@ -608,6 +568,23 @@ CREATE TABLE `genre_list` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `movie_counter`
+--
+
+CREATE TABLE `movie_counter` (
+  `total_movies` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `movie_counter`
+--
+
+INSERT INTO `movie_counter` (`total_movies`) VALUES
+(16);
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `netflix_nowledge`
 -- (See below for the actual view)
 --
@@ -643,20 +620,6 @@ INSERT INTO `produced_in` (`ID`, `Country_ID`) VALUES
 (9, 203),
 (25, 209),
 (28, 201),
-(30, 211),
-(31, 211),
-(40, 212),
-(43, 208),
-(44, 206),
-(45, 206),
-(46, 206),
-(47, 206),
-(48, 206),
-(49, 206),
-(50, 206),
-(51, 206),
-(52, 206),
-(53, 206),
 (68, 201),
 (154, 207),
 (185, 201),
@@ -726,10 +689,6 @@ INSERT INTO `stars_in` (`ID`, `Actor_ID`) VALUES
 (28, 597),
 (28, 598),
 (28, 599),
-(47, 601),
-(51, 601),
-(52, 601),
-(53, 601),
 (68, 501),
 (68, 502),
 (68, 503),
@@ -838,6 +797,24 @@ INSERT INTO `tv_movies` (`ID`, `Name`, `Year_Released`, `Location`, `Length`, `R
 (8388, 'The Last Man on the Moon', 2014, 'United Kingdom', '96 min', 'TV-PG'),
 (8751, 'Winter’s Bone', 2010, 'United States', '100 min', 'R');
 
+--
+-- Triggers `tv_movies`
+--
+DELIMITER $$
+CREATE TRIGGER `count_trigger_delete` AFTER DELETE ON `tv_movies` FOR EACH ROW BEGIN
+    UPDATE movie_counter
+    SET total_movies = (SELECT DISTINCT  COUNT(ID) FROM tv_movies);
+  END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `count_trigger_insert` AFTER INSERT ON `tv_movies` FOR EACH ROW BEGIN
+    UPDATE movie_counter
+    SET total_movies = (SELECT DISTINCT  COUNT(ID) FROM tv_movies);
+  END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -879,6 +856,7 @@ INSERT INTO `worked_for` (`Director_ID`, `Actor_ID`) VALUES
 (301, 525),
 (302, 513),
 (303, 519),
+(303, 600),
 (303, 601),
 (304, 526),
 (304, 527),
@@ -1002,12 +980,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `accounts`
---
-ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `actors`
 --
 ALTER TABLE `actors`
@@ -1072,52 +1044,8 @@ ALTER TABLE `tv_movies`
 --
 ALTER TABLE `worked_for`
   ADD PRIMARY KEY (`Director_ID`,`Actor_ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `accounts`
---
-ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-/*
-Code drawn from
-https://stackoverflow.com/questions/59089887/how-to-add-trigger-to-count-number-of-rows-automatically-after-inserting-in-orac
-and
-Info on AdvancedSQLCommands-Trigger-Replacement.pdf
-*/
-
---1. Need to create a new table to store the count
-  CREATE TABLE movie_counter (total_movies int);
---2. Insert dummy value of 0
-  INSERT INTO movie_counter (total_movies) VALUES (16);
---3. Trigger to update it on insert
-  DELIMITER //
-CREATE TRIGGER count_trigger_insert
-  AFTER INSERT ON tv_movies
-  FOR EACH ROW
-  BEGIN
-    UPDATE movie_counter
-    SET total_movies = (SELECT DISTINCT  COUNT(ID) FROM tv_movies);
-  END;
-//
-DELIMITER ;
---5. Trigger to update it on delete
-DELIMITER //
-CREATE TRIGGER count_trigger_delete
-  AFTER DELETE ON tv_movies
-  FOR EACH ROW
-  BEGIN
-    UPDATE movie_counter
-    SET total_movies = (SELECT DISTINCT  COUNT(ID) FROM tv_movies);
-  END;
-//
-DELIMITER ;
