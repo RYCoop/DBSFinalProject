@@ -48,10 +48,6 @@ $_SESSION['url_get_id'] = $_GET['id'];
                             <label for="releaseYear" class="form-label">Release Year</label>
                             <input type="text" class="form-control" name="releaseYear">
                         </div>
-                        <div>
-                            <label for="director" class="form-label">Director</label>
-                            <input type="text" class="form-control" name="director">
-                        </div>
                         <div></div>
                         <div class="col text-center">
                             <button class="btn btn-danger align-center px-5 mt-2" type="submit" >Update</button>
