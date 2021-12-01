@@ -75,7 +75,7 @@ $result = mysqli_query($con, $sql);
 	//echo "$row[1]";
 		foreach($row as $cell) {
 			if($cell == $row[0]) {
-				echo "<td><a href='updateAndDelete.html?id=$cell'>$cell</a></td>";
+				echo "<td><a href='updateAndDelete.php?id=$cell'>$cell</a></td>";
 			}
 			else {
 				echo '<td>' . $cell . '</td>';
