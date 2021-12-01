@@ -21,15 +21,6 @@ SET time_zone = "+00:00";
 -- Database: `cs4750_project`
 --
 
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `printTable` (IN `getid` INT)  SELECT *
-FROM tv_movies$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
