@@ -44,12 +44,12 @@
     if (mysqli_connect_errno()) {
         echo("Can't connect to MySQL Server. Error code: " . mysqli_connect_error());
         return null;
-        }
+    }
 
-        $Name = $_POST['title'];
-        if(empty($Name)) {
-            $Name = NULL;
-        }
+    $Name = $_POST['title'];
+    if(empty($Name)) {
+        $Name = NULL;
+    }
         
 $sql = "SELECT * FROM netflix_nowledge WHERE TV_Movie LIKE '%{$Name}%'";
 
