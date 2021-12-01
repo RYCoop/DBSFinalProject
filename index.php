@@ -22,6 +22,26 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<?php
+    require_once('./library.php');
+    $con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+    // Check connection
+    if (mysqli_connect_errno()) {
+        echo("Can't connect to MySQL Server. Error code: " . mysqli_connect_error());
+        return null;
+        }
+$sql = "SELECT total_movies FROM movie_counter";
+
+if (!mysqli_query($con,$sql)){
+                die('Error: ' . mysqli_error($con));
+}
+
+$result = mysqli_query($con, $sql);
+    $fields_num = mysqli_fetch_array($result);
+    
+    echo "<h1 style='text-align:center; color:white; margin:-18% 10% 1% 10%'><strong>Total TV/Movies on record: {$fields_num{0}}</strong></h1>";
+    
+?>
     </body>
 </html>
 
