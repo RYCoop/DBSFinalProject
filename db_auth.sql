@@ -15,6 +15,8 @@ CREATE TABLE members (
   member_email varchar(255) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/* Following Trigger derived from Professor Basit's examples */
+
 DELIMITER //
 CREATE TRIGGER `check_email` BEFORE INSERT ON `members`
 FOR EACH ROW BEGIN
