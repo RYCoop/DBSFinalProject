@@ -1086,11 +1086,11 @@ and
 Info on AdvancedSQLCommands-Trigger-Replacement.pdf
 */
 
---1. Need to create a new table to store the count
+
   CREATE TABLE movie_counter (total_movies int);
---2. Insert dummy value of 0
+
   INSERT INTO movie_counter (total_movies) VALUES (16);
---3. Trigger to update it on insert
+
   DELIMITER //
 CREATE TRIGGER count_trigger_insert
   AFTER INSERT ON tv_movies
@@ -1101,7 +1101,7 @@ CREATE TRIGGER count_trigger_insert
   END;
 //
 DELIMITER ;
---5. Trigger to update it on delete
+
 DELIMITER //
 CREATE TRIGGER count_trigger_delete
   AFTER DELETE ON tv_movies
