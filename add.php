@@ -30,6 +30,11 @@
         if(empty($Actor)) {
             $Actor = NULL;
         }
+
+
+	$tot_actors = explode(";", $Actor);
+
+
         $Name = $_POST['title'];
         if(empty($Name)) {
             $Name = NULL;
@@ -38,6 +43,9 @@
         if(empty($Location)) {
             $Location = NULL;
         }
+
+	$tot_loc = explode(";", $Location);
+
         $Director = $_POST['director'];
         if(empty($Director)) {
             $Director = NULL;
@@ -58,9 +66,10 @@
         if(empty($Genre)) {
             $Genre = NULL;
         }
-
+	
+	$tot_gen = explode(";", $Genre);
         
-
+//tv_movies
             $sql_tv_movies = "INSERT INTO TV_Movies (ID, Name, Year_Released, Location, Length, Rating)
             VALUES($ID, '$Name', $Year, '$Location', '$Length', '$Rating')";
 
@@ -69,53 +78,8 @@
             }
             echo "1 record added into tv_movies"; // Output to user
 
-
-        if ($Location == NULL) {
-            echo "empty location field";
-            $C_ID = 208;
-
-            $sql_produced_in1 = "INSERT INTO produced_in(ID, Country_ID) 
-            VALUES($ID, $C_ID)";
-            if (!mysqli_query($con,$sql_produced_in1)){
-                    die('Error: ' . mysqli_error($con));
-                }
-                echo "1 record added into produced_in"; // Output to user
-        }
-        elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Country_ID) FROM Countries WHERE Name LIKE '%{$Location}%'"))[0] > 0)  {
-            echo "location already exists";
-            $result = mysqli_query($con, "SELECT Country_ID FROM Countries WHERE Name LIKE '%{$Location}%'");
-            $row = mysqli_fetch_array($result);
-            $C_ID = $row[0];
-            
-            $sql_produced_in2 = "INSERT INTO produced_in(ID, Country_ID) 
-            VALUES($ID, $C_ID)";
-            if (!mysqli_query($con,$sql_produced_in2)){
-                    die('Error: ' . mysqli_error($con));
-                }
-                echo "1 record added into produced_in"; // Output to user
-        }
-        else {
-            echo "location does not exist, add new one";
-            $result = mysqli_query($con, "SELECT MAX(Country_ID) FROM Countries");
-            $row = mysqli_fetch_array($result);
-            $max_C_ID = $row[0];
-            $C_ID = $max_C_ID + 1;
-            $sql_countries = "INSERT INTO Countries (Country_ID, Name)
-            VALUES($C_ID, '$Location')";
-            if (!mysqli_query($con,$sql_countries)){
-                    die('Error: ' . mysqli_error($con));
-                }
-                echo "1 record added into countries"; // Output to user
-
-            $sql_produced_in3 = "INSERT INTO produced_in(ID, Country_ID) 
-            VALUES($ID, $C_ID)";
-            if (!mysqli_query($con,$sql_produced_in3)){
-                    die('Error: ' . mysqli_error($con));
-                }
-                echo "1 record added into produced_in"; // Output to user
-        }
-
-        if ($Director == NULL) {
+//director
+if ($Director == NULL) {
             echo "empty director field";
             $D_ID = 301;
             
@@ -127,9 +91,9 @@
                 echo "1 record added into directs"; // Output to user
             
         }
-        elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Director_ID) FROM Directors WHERE Name LIKE '%{$Director}%'"))[0] > 0)  {
+        elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Director_ID) FROM Directors WHERE Name = '{$Director}'"))[0] > 0)  {
             echo "director already exists";
-            $result = mysqli_query($con, "SELECT Director_ID FROM Directors WHERE Name LIKE '%{$Director}%'");
+            $result = mysqli_query($con, "SELECT Director_ID FROM Directors WHERE Name = '{$Director}'");
             $row = mysqli_fetch_array($result);
             $D_ID = $row[0];
             
@@ -139,7 +103,6 @@
                     die('Error: ' . mysqli_error($con));
                 }
                 echo "1 record added into directs"; // Output to user
-
         }
         else {
             echo "director does not exist, add a new one";
@@ -162,8 +125,10 @@
                 echo "1 record added into directs"; // Output to user
         }
 
-        if ($Actor == NULL) {
-            $A_ID = 600;
+//actors
+foreach($tot_actors as $i =>$key) {
+	if($key == NULL) {
+		$A_ID = 600;
             
             $sql_stars_in1 = "INSERT INTO Stars_in(ID, Actor_ID)
             VALUES($ID, $A_ID)";
@@ -171,27 +136,28 @@
                     die('Error: ' . mysqli_error($con));
                 }
                 echo "1 record added into stars_in"; // Output to user
-            
-        }
-        elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Actor_ID) FROM Actors WHERE Name LIKE '%{$Actor}%'"))[0] > 0)  {
-            $result = mysqli_query($con, "SELECT Actor_ID FROM Actors WHERE Name LIKE '%{$Actor}%'");
-            $row = mysqli_fetch_array($result);
+		break;
+	    }
+	elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Actor_ID) FROM Actors WHERE Name = '$key'"))[0] > 0) {
+		echo "inside elseif";
+		$result = mysqli_query($con, "SELECT Actor_ID FROM Actors WHERE Name = '{$key}'");
+	    $row = mysqli_fetch_array($result);
             $A_ID = $row[0];
-            
             $sql_stars_in2 = "INSERT INTO stars_in(ID, Actor_ID) 
             VALUES($ID, $A_ID)";
             if (!mysqli_query($con,$sql_stars_in2)){
                     die('Error: ' . mysqli_error($con));
                 }
-                echo "1 record added into stars_in"; // Output to user
-        }
-        else {
-            $result = mysqli_query($con, "SELECT MAX(Actor_ID) FROM Actors");
+                echo "1 record added into stars_in (already exists)"; // Output to user
+	}
+	else {
+		echo "inside else";
+		$result = mysqli_query($con, "SELECT MAX(Actor_ID) FROM Actors");
             $row = mysqli_fetch_array($result);
             $max_A_ID = $row[0];
             $A_ID = $max_A_ID + 1;
             $sql_actors = "INSERT INTO Actors (Actor_ID, Name)
-            VALUES ($A_ID, '$Actor')";
+            VALUES ($A_ID, '$key')";
             if (!mysqli_query($con,$sql_actors)){
                     die('Error: ' . mysqli_error($con));
                 }
@@ -201,20 +167,67 @@
             VALUES($ID, $A_ID)";
             if (!mysqli_query($con,$sql_stars_in3)){
                     die('Error: ' . mysqli_error($con));
-                }
-                echo "1 record added into stars_in"; // Output to user
-            
-            // need to add in act_in(genre_id, actor_id)
-        }
-            
-        $sql_worked_for = "INSERT INTO worked_for(Director_ID, Actor_ID) 
+            }
+                echo "1 record added into stars_in (didn't exist)"; // Output to user
+	}
+
+	$sql_worked_for = "INSERT INTO worked_for(Director_ID, Actor_ID) 
         VALUES ($D_ID, $A_ID)";
         if (!mysqli_query($con,$sql_worked_for)) {
                 die('Error: ' . mysqli_error($con));
         }
         echo "1 record added into worked_for"; // Output to user
 
-        if ($Genre == NULL) {
+//location
+foreach($tot_loc as $i => $key) {
+if ($key == NULL) {
+            $C_ID = 208;
+
+            $sql_produced_in1 = "INSERT INTO produced_in(ID, Country_ID) 
+            VALUES($ID, $C_ID)";
+            if (!mysqli_query($con,$sql_produced_in1)){
+                    die('Error: ' . mysqli_error($con));
+                }
+                echo "1 record added into produced_in"; // Output to user
+        }
+        elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Country_ID) FROM Countries WHERE Name = '{$key}'"))[0] > 0)  {
+            echo "location already exists";
+            $result = mysqli_query($con, "SELECT Country_ID FROM Countries WHERE Name = '{$key}'");
+            $row = mysqli_fetch_array($result);
+            $C_ID = $row[0];
+            
+            $sql_produced_in2 = "INSERT INTO produced_in(ID, Country_ID) 
+            VALUES($ID, $C_ID)";
+            if (!mysqli_query($con,$sql_produced_in2)){
+                    die('Error: ' . mysqli_error($con));
+                }
+                echo "1 record added into produced_in"; // Output to user
+        }
+        else {
+            echo "location does not exist, add new one";
+            $result = mysqli_query($con, "SELECT MAX(Country_ID) FROM Countries");
+            $row = mysqli_fetch_array($result);
+            $max_C_ID = $row[0];
+            $C_ID = $max_C_ID + 1;
+            $sql_countries = "INSERT INTO Countries (Country_ID, Name)
+            VALUES($C_ID, '$key')";
+            if (!mysqli_query($con,$sql_countries)){
+                    die('Error: ' . mysqli_error($con));
+                }
+                echo "1 record added into countries"; // Output to user
+
+            $sql_produced_in3 = "INSERT INTO produced_in(ID, Country_ID) 
+            VALUES($ID, $C_ID)";
+            if (!mysqli_query($con,$sql_produced_in3)){
+                    die('Error: ' . mysqli_error($con));
+                }
+                echo "1 record added into produced_in"; // Output to user
+        }
+}
+
+//genre
+foreach($tot_gen as $i => $key) {
+if ($key == NULL) {
             $G_ID = 419;
 
             $sql_categorized_as1 = "INSERT INTO Categorized_as(ID, Genre_ID)
@@ -224,14 +237,15 @@
                 }
             echo "1 record added into categorized_as"; // Output to user
         }
-        elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Genre_ID) FROM Genre WHERE Name LIKE '{$Genre}'"))[0] > 0)  {
-            $result = mysqli_query($con, "SELECT Genre_ID FROM Genre WHERE Name LIKE '{$Genre}'");
+        elseif (mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(Genre_ID) FROM Genre WHERE Name = '{$key}'"))[0] > 0)  {
+		echo "genre already exists";
+            $result = mysqli_query($con, "SELECT Genre_ID FROM Genre WHERE Name = '{$key}'");
             $row = mysqli_fetch_array($result);
             $G_ID = $row[0];
             
             $sql_categorized_as2 = "INSERT INTO categorized_as(ID, Genre_ID) 
             VALUES($ID, $G_ID)";
-            if (!mysqli_query($con,$sql_categorized_as)){
+            if (!mysqli_query($con,$sql_categorized_as2)){
                     die('Error: ' . mysqli_error($con));
                 }
                 echo "1 record added into categorized_as"; // Output to user
@@ -242,7 +256,7 @@
             $max_G_ID = $row[0];
             $G_ID = $max_G_ID + 1;
             $sql_genre = "INSERT INTO Genre (Genre_ID, Name)
-            VALUES ($ID, '$Genre')";
+            VALUES ($G_ID, '$Genre')";
             if (!mysqli_query($con,$sql_genre)){
                     die('Error: ' . mysqli_error($con));
                 }
@@ -255,15 +269,14 @@
                 }
                 echo "1 record added into categorized_as"; 
             } // Output to user
-
+	}
         $sql_act_in = "INSERT INTO act_in(Genre_ID, Actor_ID) 
         VALUES ($G_ID, $A_ID)";
         if (!mysqli_query($con,$sql_act_in)) {
                 die('Error: ' . mysqli_error($con));
         }
         echo "1 record added into act_in"; // Output to user
-
-
+}
         mysqli_close($con);
         ?>
     </body>
