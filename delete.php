@@ -1,3 +1,8 @@
+<?php
+session_start();
+$delete_ID = $_SESSION['url_get_id'];
+?>
+
 <!DOCTYPE HTML>
 <html lang="en">
     <head>
@@ -18,6 +23,25 @@
                 <a href="searchData.html"><button class="btn btn-danger align-center px-5 mt-3" type="submit">Back to Search</button></a>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <?php
+            require_once('./library.php');
+            $con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+
+        // Check connection
+            if (mysqli_connect_errno()) {
+                echo("Can't connect to MySQL Server. Error code: " . mysqli_connect_error());
+                return null;
+            }
+
+//tv_movies
+	$sql_tv_movies = "DELETE FROM TV_Movies WHERE ID = {$delete_ID}";
+	if (!mysqli_query($con,$sql_tv_movies)){
+                die('Error: ' . mysqli_error($con));
+            }
+            echo "1 record deleted from tv_movies"; // Output to user
+
+
+        mysqli_close($con);
+        ?>
     </body>
 </html>
