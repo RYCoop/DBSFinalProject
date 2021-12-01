@@ -66,29 +66,6 @@ if (! empty($_POST["login"])) {
 }
 ?>
 <style>
-
-.field-group {
-    margin-top: 15px;
-}
-
-.input-field {
-    padding: 12px 10px;
-    width: 100%;
-    border: #A3C3E7 1px solid;
-    border-radius: 2px;
-    margin-top: 5px
-}
-
-.form-submit-button {
-    background: #3a96d6;
-    border: 0;
-    padding: 10px 0px;
-    border-radius: 2px;
-    color: #FFF;
-    text-transform: uppercase;
-    width: 100%;
-}
-
 </style>
 <!DOCTYPE html>
 <html>
@@ -110,7 +87,7 @@ if (! empty($_POST["login"])) {
                     <div class="error" style="text-align: center;color: #FF0000;">
                         <?php if(isset($message)) { echo $message; } ?>
                     </div>
-                    <div class="field-group">
+                    <div style="margin-top: 15px;">
                         <div>
                             <label for="login">Username</label>
                         </div>
@@ -118,7 +95,7 @@ if (! empty($_POST["login"])) {
                             <input name="member_name" type="text"  class="form-control" style="width: 100%;" value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>">
                         </div>
                     </div>
-                    <div class="field-group">
+                    <div style="margin-top: 15px;">
                         <div>
                             <label for="password">Password</label>
                         </div>
@@ -126,7 +103,7 @@ if (! empty($_POST["login"])) {
                             <input name="member_password"class="form-control" type="password" style="width: 100%;" value="<?php if(isset($_COOKIE["member_password"])) { echo $_COOKIE["member_password"]; } ?>">
                         </div>
                     </div>
-                    <div class="field-group">
+                    <div style="margin-top: 15px;">
                         <div>
                             <input type="checkbox" name="remember" id="remember"
                                 <?php if(isset($_COOKIE["member_login"])) { ?> checked
@@ -134,7 +111,7 @@ if (! empty($_POST["login"])) {
                                 <label for="remember-me">Remember me</label>
                         </div>
                     </div>
-                    <div class="field-group">
+                    <div style="margin-top: 15px;">
                         <div>
                             <input type="submit" name="login" value="Login"
                                 class="btn btn-danger align-center px-5 mt-3"></span>
