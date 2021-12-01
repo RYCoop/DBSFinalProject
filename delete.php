@@ -38,7 +38,7 @@ $delete_ID = $_SESSION['url_get_id'];
 	if (!mysqli_query($con,$sql_tv_movies)){
                 die('Error: ' . mysqli_error($con));
             }
-            echo "1 record deleted from tv_movies"; // Output to user
+            // echo "1 record deleted from tv_movies"; // Output to user
 
 
         mysqli_close($con);
