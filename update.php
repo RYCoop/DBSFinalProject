@@ -1,3 +1,8 @@
+<?php
+session_start();
+$update_id = $_SESSION['url_get_id'];
+?>
+
 <!DOCTYPE HTML>
 <html lang="en">
     <head>
@@ -9,69 +14,81 @@
             <nav class="navbar navbar-dark bg-dark">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.php" style="color:red"><strong>Netflix Nowledge</strong></a>
-                    <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-danger" type="update">Search</button>
-                    </form>
+                    
                 </div>
             </nav>
         </header>
-        <form class="row g-3" style="margin:0% 15% 0% 15%">
-            <h1 style="text-align:center; margin:3% 0% 1% 0%"><strong>UPDATE</strong></h1>
-            <div class="col-md-6">
-                <label for="showID" class="form-label">Show ID</label>
-                <input type="text" class="form-control" id="showID">
-            </div>
-            <div class="col-md-6">
-                <label for="cast" class="form-label">Cast</label>
-                <input type="text" class="form-control" id="cast">
-            </div>
-            <div class="col-md-6">
-                <label for="type" class="form-label">Type</label>
-                <input type="text" class="form-control" id="type">
-            </div>
-            <div class="col-md-6">
-                <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="country">
-            </div>
-            <div class="col-md-6">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title">
-            </div>
-            <div class="col-md-6">
-                <label for="dateAdded" class="form-label">Date Added</label>
-                <input type="text" class="form-control" id="dateAdded">
-            </div>
-            <div class="col-md-6">
-                <label for="director" class="form-label">Director</label>
-                <input type="text" class="form-control" id="director">
-            </div>
-            <div class="col-md-6">
-                <label for="releaseYear" class="form-label">Release Year</label>
-                <input type="text" class="form-control" id="releaseYear">
-            </div>
-            <div class="col-md-6">
-                <label for="rating" class="form-label">Rating</label>
-                <input type="text" class="form-control" id="rating">
-            </div>
-            <div class="col-md-6">
-                <label for="duration" class="form-label">Duration</label>
-                <input type="text" class="form-control" id="duration">
-            </div>
-            <div class="col text-center">
-                <button class="btn btn-danger align-center px-5 mt-3" type="update" >Update</button>
-            </div>
-        </form>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    </body>
-</html>
 
 <?php
     require_once('./library.php');
     $con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+
     // Check connection
     if (mysqli_connect_errno()) {
         echo("Can't connect to MySQL Server. Error code: " . mysqli_connect_error());
         return null;
-        }
+    }
+
+	
+	$Name = $_POST['title'];
+	$Length = $_POST['duration'];
+	$Rate = $_POST['rating'];
+	$Year = $_POST['releaseYear'];
+
+if($Name != NULL) {
+		$sql_update_name = "UPDATE tv_movies SET Name = '{$Name}' WHERE ID = {$update_id}";
+		if (!mysqli_query($con,$sql_update_name)){
+                die('Error: ' . mysqli_error($con));
+            	}
+	}
+	elseif($Length != NULL) {
+		$sql_update_length = "UPDATE tv_movies SET Length = '{$Length}' WHERE ID = {$update_id}";
+		if (!mysqli_query($con,$sql_update_length)){
+                die('Error: ' . mysqli_error($con));
+            	}
+	}
+	elseif($Rate != NULL) {
+		$sql_update_rating = "UPDATE tv_movies SET Rating = '{$Rate}' WHERE ID = {$update_id}";
+		if (!mysqli_query($con,$sql_update_rating)){
+                die('Error: ' . mysqli_error($con));
+            	}
+	}
+	elseif($Year != NULL) {
+		$sql_update_year = "UPDATE tv_movies SET Year_Released = '{$Year}' WHERE ID = {$update_id}";
+		if (!mysqli_query($con,$sql_update_year)){
+                die('Error: ' . mysqli_error($con));
+            	}
+	}
+
+$sql = "SELECT * FROM netflix_nowledge WHERE ID = {$update_id}";
+if (!mysqli_query($con,$sql)){
+                die('Error: ' . mysqli_error($con));
+}
+$result = mysqli_query($con, $sql);
+	$fields_num = mysqli_num_fields($result);
+	
+	echo "<h1 style='text-align:center; margin:3% 10% 1% 10%'><strong>Results: Updated Entry</strong></h1>";
+	echo "<table border'1' class='table' style='background-color: white; width:90%; margin-right: auto; margin-left: auto; margin-top: 2%;'><tr style='background-color: #E50914; color:white'>";
+	for($i=0; $i<$fields_num; $i++) {
+		$field = mysqli_fetch_field($result);
+		echo "<th>{$field->name}</th>";
+	}	
+	echo "</tr>\n";
+
+    echo "</tr>\n";
+	while($row = mysqli_fetch_row($result)) {
+		foreach($row as $cell) {
+			echo '<td>' . $cell . '</td>';
+		}
+		echo "</tr>\n";		
+	}
+    echo "</table>";
+	mysqli_free_result($result);
+
+mysqli_close($con);
 ?>
+
+    </body>
+</html>
