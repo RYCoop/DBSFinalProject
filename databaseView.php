@@ -91,7 +91,9 @@ $result = mysqli_query($con, $sql);
 mysqli_close($con);
 
 ?>
-
+        <div class="col text-center" style="margin-bottom: 5%; margin-top: 1%">
+            <a href="searchData.html"><button class="btn btn-danger align-center px-5 mt-3" type="submit">Back to Search</button></a>
+        </div>
     </body>
 </html>
 
