@@ -66,80 +66,60 @@ if (! empty($_POST["login"])) {
 }
 ?>
 <style>
-body {
-    font-family: Arial;
-}
-
-#frmLogin {
-    padding: 20px 40px 40px 40px;
-    background: #d7eeff;
-    border: #acd4f1 1px solid;
-    color: #333;
-    border-radius: 2px;
-    width: 300px;
-}
-
-.field-group {
-    margin-top: 15px;
-}
-
-.input-field {
-    padding: 12px 10px;
-    width: 100%;
-    border: #A3C3E7 1px solid;
-    border-radius: 2px;
-    margin-top: 5px
-}
-
-.form-submit-button {
-    background: #3a96d6;
-    border: 0;
-    padding: 10px 0px;
-    border-radius: 2px;
-    color: #FFF;
-    text-transform: uppercase;
-    width: 100%;
-}
-
-.error-message {
-    text-align: center;
-    color: #FF0000;
-}
 </style>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Netflix Nowledge</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    </head>
+    <body style="background-color:#434343">
+        <header>
+            <nav class="navbar navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="control.php" style="color:red"><strong>Netflix Nowledge</strong></a>
+                </div>
+            </nav>
+        </header>
+            <div class="row justify-content-center" style="margin-top:3%;">
+                <h1 style="text-align:center; color:white; margin-bottom:2%">Login</h1>
+                <form action="" method="post" style="width:40%; padding: 40px 50px 50px 50px; background: white;">
+                    <div class="error" style="text-align: center;color: #FF0000;">
+                        <?php if(isset($message)) { echo $message; } ?>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div>
+                            <label for="login">Username</label>
+                        </div>
+                        <div>
+                            <input name="member_name" type="text"  class="form-control" style="width: 100%;" value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>">
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div>
+                            <label for="password">Password</label>
+                        </div>
+                        <div>
+                            <input name="member_password"class="form-control" type="password" style="width: 100%;" value="<?php if(isset($_COOKIE["member_password"])) { echo $_COOKIE["member_password"]; } ?>">
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div>
+                            <input type="checkbox" name="remember" id="remember"
+                                <?php if(isset($_COOKIE["member_login"])) { ?> checked
+                                <?php } ?> /> 
+                                <label for="remember-me">Remember me</label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div>
+                            <input type="submit" name="login" value="Login"
+                                class="btn btn-danger align-center px-5 mt-3"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-<form action="" method="post" id="frmLogin">
-    <div class="error-message"><?php if(isset($message)) { echo $message; } ?></div>
-    <div class="field-group">
-        <div>
-            <label for="login">Username</label>
-        </div>
-        <div>
-            <input name="member_name" type="text"
-                value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>"
-                class="input-field">
-        </div>
-    </div>
-    <div class="field-group">
-        <div>
-            <label for="password">Password</label>
-        </div>
-        <div>
-            <input name="member_password" type="password"
-                value="<?php if(isset($_COOKIE["member_password"])) { echo $_COOKIE["member_password"]; } ?>"
-                class="input-field">
-        </div>
-    </div>
-    <div class="field-group">
-        <div>
-            <input type="checkbox" name="remember" id="remember"
-                <?php if(isset($_COOKIE["member_login"])) { ?> checked
-                <?php } ?> /> <label for="remember-me">Remember me</label>
-        </div>
-    </div>
-    <div class="field-group">
-        <div>
-            <input type="submit" name="login" value="Login"
-                class="form-submit-button"></span>
-        </div>
-    </div>
-</form>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
+</html>
